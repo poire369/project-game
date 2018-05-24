@@ -1,25 +1,36 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Country {
 
-    int countryId;
-    String countryName;
-    List<Integer> adjacencyCountries;
-    boolean isEmpty;
-    int playerId;
+    private int countryId;
+
+    private String countryName;
+
+    private List<Integer> adjacencyCountries;
+
+    private boolean isEmpty;
+
+    private int playerId;
+
+    private List<Unit> units;
+
+    private int territoryId;
 
     public Country(int countryId,
             String countryName,
             List<Integer> adjacencyCountries,
-            boolean isEmpty,
-            int playerId){
+                   int territoryId)
+    {
         this.countryId=countryId;
         this.countryName=countryName;
         this.adjacencyCountries = adjacencyCountries;
-        this.isEmpty=isEmpty;
-        this.playerId=playerId;
+        this.territoryId=territoryId;
+        this.isEmpty=true;
+        this.playerId=-1;
+        this.units = new ArrayList<>();
     }
 
     public int getCountryId() {
@@ -62,4 +73,19 @@ public class Country {
         this.playerId = playerId;
     }
 
+    public List<Unit> getUnits() {
+        return units;
+    }
+
+    public void setUnits(List<Unit> units) {
+        this.units = units;
+    }
+
+    public int getTerritoryId() {
+        return territoryId;
+    }
+
+    public void setTerritoryId(int territoryId) {
+        this.territoryId = territoryId;
+    }
 }

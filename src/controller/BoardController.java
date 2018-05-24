@@ -10,15 +10,17 @@ import javafx.scene.input.MouseEvent;
 
 
 import model.Board;
+import model.Country;
+import model.Player;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class BoardController implements Initializable {
 
     private Board board;
 
-    //BoardModel boardModel;
     @FXML
     private GridPane country1;
 
@@ -26,12 +28,30 @@ public class BoardController implements Initializable {
     public void initialize(URL location, ResourceBundle resources){
         //toutes les phases d'initialisation
         board= new Board();
-        board.init();
+        board.init(this);
+        updateCountries(board.getCountries());
+        updatePlayers(board.getPlayers());
     }
 
     @FXML
     private void handleAction(MouseEvent event){
         System.out.println("test");
+    }
+
+    public void updateCountries(List<Country> countries){
+        countries.forEach(c->updateCountry(c));
+    }
+
+    public void updateCountry(Country country){
+        //mettre a jour les elements graphiques
+    }
+
+    public void updatePlayers(List<Player> players){
+        players.forEach(p->updatePlayer(p));
+    }
+
+    public void updatePlayer(Player player){
+        //mettre a jour les elements graphiques
     }
 
 }

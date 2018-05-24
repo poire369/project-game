@@ -1,6 +1,7 @@
 package utils;
 
 import model.Country;
+import model.Territory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,6 +14,10 @@ import java.util.stream.Collectors;
 
 public class BoardUtils {
 
+    private static String coutriesFilePath = "../resources/countries.txt";
+
+    private static String territoriesFilePath = "../resources/territories.txt";
+
     private BoardUtils(){
         //nothing to do
     }
@@ -21,10 +26,10 @@ public class BoardUtils {
      * param String filePath
      * return  List<Country> countries
      */
-    public static List<Country> initCountry(String filePath){
+    public static List<Country> initCountry(){
         List<Country> countries = new ArrayList<>();
         try {
-            InputStream inputStream = BoardUtils.class.getResourceAsStream(filePath);
+            InputStream inputStream = BoardUtils.class.getResourceAsStream(coutriesFilePath);
             StringBuilder resultStringBuilder = new StringBuilder();
             try (BufferedReader br
                          = new BufferedReader(new InputStreamReader(inputStream))) {
@@ -34,9 +39,8 @@ public class BoardUtils {
                     int countryId = Integer.parseInt(fields[0]);
                     String countryName = fields[1];
                     List<Integer> adjacencyCountries=Arrays.asList(fields[2].split(":")).stream().map(Integer::parseInt).collect(Collectors.toList());
-                    boolean isEmpty = Boolean.getBoolean(fields[3]);
-                    int playerId = Integer.parseInt(fields[4]);
-                    Country tempCountry = new Country(countryId,countryName,adjacencyCountries,isEmpty,playerId);
+                    int territoryId = Integer.parseInt(fields[3]);
+                    Country tempCountry = new Country(countryId,countryName,adjacencyCountries,territoryId);
                     countries.add(tempCountry);
                 }
             }
@@ -46,5 +50,30 @@ public class BoardUtils {
         }
 
         return countries;
+    }
+
+    public static List<Territory> initTerritory(List<Country> countries){
+        List<Territory> territories = new ArrayList<>();
+        try {
+            InputStream inputStream = BoardUtils.class.getResourceAsStream(territoriesFilePath);
+            StringBuilder resultStringBuilder = new StringBuilder();
+            try (BufferedReader br
+                         = new BufferedReader(new InputStreamReader(inputStream))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    String[] fields = line.split(",");
+                    int territoryId = Integer.parseInt(fields[0]);
+                    String territoryName = fields[1];
+                    List<Country> territoryCountries = countries.stream().filter(c->c.getTerritoryId()==territoryId).collect(Collectors.toList());
+                    Territory tempTerritory = new Territory(territoryId,territoryName,countries);
+                    territories.add(tempTerritory);
+                }
+            }
+        }catch (IOException exception){
+            System.out.println("erreur initalisation des territoires");
+            return null;
+        }
+
+        return territories;
     }
 }
