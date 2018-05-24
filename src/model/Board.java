@@ -4,6 +4,7 @@ import controller.BoardController;
 import utils.BoardUtils;
 import utils.CountryUtils;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,10 +27,14 @@ public class Board {
         this.countries =  BoardUtils.initCountry();
         this.territories= BoardUtils.initTerritory(countries);
         this.controller=controller;
+        players=new ArrayList<>();
+        players.add(new Player(1,"p1"));
+        players.add(new Player(2,"p2"));
+        assignCountries();
     }
 
     public void assignCountries(){
-        List<Country> coutriesList = countries;
+        List<Country> coutriesList = new ArrayList<>(countries);
         Collections.shuffle(coutriesList);
         while(!coutriesList.isEmpty()){
             players.forEach(p->{
@@ -37,9 +42,9 @@ public class Board {
                     return;
                 Country tempCountry =coutriesList.get(0);
                 p.getCountries().add(tempCountry);
-                coutriesList.remove(tempCountry);
                 Country c = CountryUtils.getCountryById(countries,tempCountry.getCountryId());
                 c.setPlayerId(p.getPlayerId());
+                coutriesList.remove(tempCountry);
             });
         }
         players.forEach(p->{
