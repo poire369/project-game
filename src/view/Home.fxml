@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="473.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeController">
+   <children>
+      <SplitPane dividerPositions="0.21019108280254778" orientation="VERTICAL" prefHeight="522.0" prefWidth="600.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="90.0" prefWidth="598.0">
+               <children>
+                  <Button fx:id="buttonPlay" layoutX="456.0" layoutY="17.0" mnemonicParsing="false" onAction="#setPlayerSettings" prefHeight="73.0" prefWidth="103.0" text="JOUER">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Button>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="47.0" layoutY="17.0" prefHeight="73.0" prefWidth="344.0" text="Bienvenue sur le jeu RISK" textAlignment="CENTER" textFill="#0a1eff">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="327.0" prefWidth="598.0">
+               <children>
+                  <ImageView fitHeight="431.0" fitWidth="624.0" layoutX="-13.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/home_risk.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

@@ -19,6 +19,8 @@ public class Country {
 
     private int territoryId;
 
+    private String boardViewId;
+
     public Country(int countryId,
             String countryName,
             List<Integer> adjacencyCountries,

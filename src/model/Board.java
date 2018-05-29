@@ -20,6 +20,9 @@ public class Board {
     private BoardController controller;
 
     public Board(){
+        players=new ArrayList<>();
+        territories= new ArrayList<>();
+        countries = new ArrayList<>();
         //constructor
     }
 
@@ -27,10 +30,10 @@ public class Board {
         this.countries =  BoardUtils.initCountry();
         this.territories= BoardUtils.initTerritory(countries);
         this.controller=controller;
-        players=new ArrayList<>();
-        players.add(new Player(1,"p1"));
-        players.add(new Player(2,"p2"));
-        assignCountries();
+
+       // players.add(new Player(1,"p1"));
+        //players.add(new Player(2,"p2"));
+        //assignCountries();
     }
 
     public void assignCountries(){
