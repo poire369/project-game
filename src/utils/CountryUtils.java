@@ -3,6 +3,7 @@ package utils;
 import model.Country;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CountryUtils {
 
@@ -11,10 +12,12 @@ public class CountryUtils {
     }
 
     public static Country getCountryById(List<Country> countries, int countryId){
-        for(Country country : countries){
-            if(country.getCountryId()==countryId)
-                return country;
-        }
-        return null;
+        return countries.stream().filter(c->c.getCountryId()==countryId).collect(Collectors.toList()).get(0);
     }
+
+    public static Country getCountryByBoardViewId(List<Country> countries, String boardViewId){
+        return countries.stream().filter(c->c.getBoardViewId().equals(boardViewId)).collect(Collectors.toList()).get(0);
+    }
+
+
 }

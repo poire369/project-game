@@ -68,6 +68,10 @@ public class PlayerInitController implements Initializable {
 
     }
 
+    /*
+     * update TextFields disable property
+     * according to playerCountChoiceBox value
+     */
     private void changePlayerCount(int numberPlayer){
         switch (numberPlayer) {
             case 2: disablePlayerName(players.subList(2,6));
@@ -94,15 +98,14 @@ public class PlayerInitController implements Initializable {
         playersName.forEach(p->p.setDisable(true));
     }
 
+    /*
+     * action trigger when player click on Play Button
+     */
     @FXML
     private void launchGame(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("../view/Board.fxml"));
-        try{
-            loader.load();
-        } catch (Exception e){
-            System.out.println(e);
-        }
+        loader.load();
         BoardController controller = loader.getController();
         Parent boardGameView = loader.getRoot();
         addPlayersName();

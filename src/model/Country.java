@@ -24,12 +24,13 @@ public class Country {
     public Country(int countryId,
             String countryName,
             List<Integer> adjacencyCountries,
-                   int territoryId)
+                   int territoryId,String boardViewId)
     {
         this.countryId=countryId;
         this.countryName=countryName;
         this.adjacencyCountries = adjacencyCountries;
         this.territoryId=territoryId;
+        this.boardViewId=boardViewId;
         this.isEmpty=true;
         this.playerId=-1;
         this.units = new ArrayList<>();
@@ -89,5 +90,13 @@ public class Country {
 
     public void setTerritoryId(int territoryId) {
         this.territoryId = territoryId;
+    }
+
+    public String getBoardViewId() {
+        return boardViewId;
+    }
+
+    public void setBoardViewId(String boardViewId) {
+        this.boardViewId = boardViewId;
     }
 }

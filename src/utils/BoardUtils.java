@@ -40,7 +40,8 @@ public class BoardUtils {
                     String countryName = fields[1];
                     List<Integer> adjacencyCountries=Arrays.asList(fields[2].split(":")).stream().map(Integer::parseInt).collect(Collectors.toList());
                     int territoryId = Integer.parseInt(fields[3]);
-                    Country tempCountry = new Country(countryId,countryName,adjacencyCountries,territoryId);
+                    String boardViewId = fields[4];
+                    Country tempCountry = new Country(countryId,countryName,adjacencyCountries,territoryId,boardViewId);
                     countries.add(tempCountry);
                 }
             }
@@ -48,6 +49,8 @@ public class BoardUtils {
             System.out.println("erreur initalisation des pays");
             return null;
         }
+
+        countries.forEach(c->System.out.println(c.getBoardViewId()+","+c.getCountryName()));
 
         return countries;
     }
@@ -76,4 +79,5 @@ public class BoardUtils {
 
         return territories;
     }
+
 }

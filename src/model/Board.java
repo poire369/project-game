@@ -30,10 +30,9 @@ public class Board {
         this.countries =  BoardUtils.initCountry();
         this.territories= BoardUtils.initTerritory(countries);
         this.controller=controller;
-
        // players.add(new Player(1,"p1"));
         //players.add(new Player(2,"p2"));
-        //assignCountries();
+
     }
 
     public void assignCountries(){
