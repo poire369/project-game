@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -44,6 +47,8 @@ public class PlayerInitController implements Initializable {
     @FXML
     TextField player6;
 
+    private List<TextField>  players;
+
     @FXML
     Button launchGame;
 
@@ -52,24 +57,56 @@ public class PlayerInitController implements Initializable {
         playersName = new ArrayList<>();
         playerCountChoiceBox.setItems(FXCollections.observableArrayList(
                 2, 3, 4,5,6));
+        playerCountChoiceBox.setValue(6);
+        playerCountChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+                changePlayerCount(Integer.parseInt(playerCountChoiceBox.getItems().get((Integer) number2).toString()));
+            }
+        });
+        players = Arrays.asList(player1,player2,player3,player4,player5,player6);
+
+    }
+
+    private void changePlayerCount(int numberPlayer){
+        switch (numberPlayer) {
+            case 2: disablePlayerName(players.subList(2,6));
+                    break;
+            case 3: disablePlayerName(players.subList(3,6));
+                    enablePlayerName(players.subList(2,3));
+                    break;
+            case 4: disablePlayerName(players.subList(4,6));
+                    enablePlayerName(players.subList(2,4));
+                    break;
+            case 5 : disablePlayerName(players.subList(5,6));
+                    enablePlayerName(players.subList(2,5));
+                     break;
+            case 6 : enablePlayerName(players.subList(2,6));
+                     break;
+        }
+    }
+
+    private void enablePlayerName(List<TextField> playersName){
+        playersName.forEach(p->p.setDisable(false));
+    }
+
+    private void disablePlayerName(List<TextField> playersName){
+        playersName.forEach(p->p.setDisable(true));
     }
 
     @FXML
     private void launchGame(ActionEvent event) throws IOException {
-        this.playersName.clear();
-        addPlayer(player1.getText());
-        addPlayer(player2.getText());
-        addPlayer(player3.getText());
-        //addPlayer(player4.getText());
-        //addPlayer(player5.getText());
-        //addPlayer(player6.getText());
         FXMLLoader loader = new FXMLLoader();
-        Parent boardGameView = loader.load(getClass().getResource("../view/Board.fxml"));
-        BoardController controller = (BoardController)loader.getController();
-        playersName.forEach(p->{
-               System.out.println(p);
-        });
-        //controller.setPlayers(playersName);
+        loader.setLocation(getClass().getResource("../view/Board.fxml"));
+        try{
+            loader.load();
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        BoardController controller = loader.getController();
+        Parent boardGameView = loader.getRoot();
+        addPlayersName();
+        controller.setPlayers(playersName);
         Scene boardGameScene = new Scene(boardGameView, 1295, 918);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(boardGameScene);
@@ -77,9 +114,12 @@ public class PlayerInitController implements Initializable {
 
     }
 
-    private void addPlayer(String player){
-        if(player.length()>0) {
-            this.playersName.add(player);
+    private void addPlayersName(){
+        this.playersName.clear();
+        for(TextField player : players) {
+            if (player.isDisable()==false) {
+                this.playersName.add(player.getText());
+            }
         }
     }
 

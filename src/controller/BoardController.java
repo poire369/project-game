@@ -31,7 +31,6 @@ public class BoardController implements Initializable {
         //toutes les phases d'initialisation
         board= new Board();
         board.init(this);
-        setPlayers(Arrays.asList("p1", "p2", "p3","p4"));
         //updateCountries(board.getCountries());
         //updatePlayers(board.getPlayers());
     }
