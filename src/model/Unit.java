@@ -6,18 +6,24 @@ public class Unit {
 
     private int cout;
 
-    private int puissance;
+    private int minPower;
+
+    private int maxPower;
 
     private int attackPriority;
 
     private int defensePriority;
 
-    public Unit(UnitType unitType, int cout, int puissance, int attackPriority, int defensePriority) {
+    private int move;
+
+    public Unit(UnitType unitType, int cout, int minpPower,int maxPower, int attackPriority, int defensePriority, int move) {
         this.unitType = unitType;
         this.cout = cout;
-        this.puissance = puissance;
+        this.minPower = minPower;
+        this.maxPower = maxPower;
         this.attackPriority = attackPriority;
         this.defensePriority = defensePriority;
+        this.move=move;
     }
 
     public UnitType getUnitType() {
@@ -36,12 +42,28 @@ public class Unit {
         this.cout = cout;
     }
 
-    public int getPuissance() {
-        return puissance;
+    public int getMinPower() {
+        return minPower;
     }
 
-    public void setPuissance(int puissance) {
-        this.puissance = puissance;
+    public void setMinPower(int minPower) {
+        this.minPower = minPower;
+    }
+
+    public int getMaxPower() {
+        return maxPower;
+    }
+
+    public void setMaxPower(int maxPower) {
+        this.maxPower = maxPower;
+    }
+
+    public int getMove() {
+        return move;
+    }
+
+    public void setMove(int move) {
+        this.move = move;
     }
 
     public int getAttackPriority() {

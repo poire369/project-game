@@ -3,7 +3,7 @@ package model;
 // création d'une liste (enum) unite
 public enum UnitType {
     INFANTRY("INFANTRY"),
-    CAVALERY("CAVALERY"),
+    CAVALRY("CAVALRY"),
     ARTILLERY("ARTILLERY");
 
     private String name;

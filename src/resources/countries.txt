@@ -11,3 +11,32 @@
 11,Brazil,3:1,2,SA_2
 12,Peru,3:1,2,SA_3
 13,Venezuela,3:1,2,SA_4
+14,Congo,3:1,3,AF_1
+15,East Africa,3:1,3,AF_2
+16,Egypt,3:1,3,AF_3
+17,Madagascar,3:1,3,AF_4
+18,North Africa,3:1,3,AF_5
+19,South Africa,3:1,3,AF_6
+20,Great Britain,3:1,4,E_1
+21,Iceland,3:1,4,E_2
+22,Northern Europe,3:1,4,E_3
+23,Scandinavia,3:1,4,E_4
+24,Southern Europe,3:1,4,E_5
+25,Ukraine,3:1,4,E_6
+26,Western Europe,3:1,4,E_7
+27,Eastern Australia,3:1,5,AU_1
+28,Indonesia,3:1,5,AU_2
+29,New Guinea,3:1,5,AU_3
+30,Western Australia,3:1,5,AU_4
+31,Afghanistan,3:1,6,A_1
+32,China,3:1,6,A_2
+33,India,3:1,6,A_3
+34,Irkutsk,3:1,6,A_4
+35,Japan,3:1,6,A_5
+36,Kamchatka,3:1,6,A_6
+37,Middle East,3:1,6,A_7
+38,Mongolia,3:1,6,A_8
+39,Siam,3:1,6,A_9
+40,Siberia,3:1,6,A_10
+41,Ural,3:1,6,A_11
+42,Yakutsk,3:1,6,A_12

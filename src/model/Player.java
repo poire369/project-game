@@ -5,14 +5,20 @@ import java.util.List;
 
 public class Player {
 
-    int playerId;
-    String playerName;
-    List<Country> countries;
-    List<Territory> territories;
+    private int playerId;
 
-    public Player(int playerId, String playerName) {
+    private String playerName;
+
+    private List<Country> countries;
+
+    private List<Territory> territories;
+
+    private int reinforceUnitCount;
+
+    public Player(int playerId, String playerName, int reinforceUnitCount) {
         this.playerId = playerId;
         this.playerName = playerName;
+        this.reinforceUnitCount=reinforceUnitCount;
         countries=new ArrayList<>();
         territories= new ArrayList<>();
     }
@@ -47,5 +53,13 @@ public class Player {
 
     public void setTerritories(List<Territory> territories) {
         this.territories = territories;
+    }
+
+    public int getReinforceUnitCount() {
+        return reinforceUnitCount;
+    }
+
+    public void setReinforceUnitCount(int reinforceUnitCount) {
+        this.reinforceUnitCount = reinforceUnitCount;
     }
 }

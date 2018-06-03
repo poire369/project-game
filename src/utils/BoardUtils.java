@@ -50,11 +50,15 @@ public class BoardUtils {
             return null;
         }
 
-        countries.forEach(c->System.out.println(c.getBoardViewId()+","+c.getCountryName()));
+        //countries.forEach(c->System.out.println(c.getBoardViewId()+","+c.getCountryName()));
 
         return countries;
     }
 
+    /*
+     * param List<Country> countries
+     * return  List<Territory> territories
+     */
     public static List<Territory> initTerritory(List<Country> countries){
         List<Territory> territories = new ArrayList<>();
         try {
