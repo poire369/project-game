@@ -115,12 +115,39 @@
                       </Tab>
                       <Tab fx:id="moveMenu" text="deplacement">
                         <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label alignment="CENTER" layoutX="19.0" layoutY="14.0" prefHeight="29.0" prefWidth="163.0" text="Selectionner Pays 1" />
+                                    <Label alignment="CENTER" layoutX="19.0" layoutY="104.0" prefHeight="29.0" prefWidth="163.0" text="Selectionner  Pays 2" />
+                                    <ChoiceBox fx:id="moveCountry1" layoutX="20.0" layoutY="53.0" prefHeight="28.0" prefWidth="161.0" />
+                                    <ChoiceBox fx:id="moveCountry2" layoutX="20.0" layoutY="155.0" prefHeight="28.0" prefWidth="161.0" />
+                                    <Label alignment="CENTER" layoutX="20.0" layoutY="232.0" prefHeight="25.0" prefWidth="109.0" text="Infanterie" />
+                                    <Label alignment="CENTER" layoutX="20.0" layoutY="271.0" prefHeight="25.0" prefWidth="109.0" text="Cavalerie" />
+                                    <Label alignment="CENTER" layoutX="20.0" layoutY="308.0" prefHeight="25.0" prefWidth="109.0" text="Artillerie" />
+                                    <TextField fx:id="moveNumberInfrantry" layoutX="139.0" layoutY="232.0" prefHeight="25.0" prefWidth="36.0" />
+                                    <TextField fx:id="moveNumberCavalry" layoutX="139.0" layoutY="271.0" prefHeight="25.0" prefWidth="36.0" />
+                                    <TextField fx:id="moveNumberArtillery" layoutX="139.0" layoutY="308.0" prefHeight="25.0" prefWidth="36.0" />
+                                    <Button fx:id="move" layoutX="106.0" layoutY="365.0" mnemonicParsing="false" onAction="#moveAction" prefHeight="31.0" prefWidth="77.0" text="Deplacer" />
+                                 </children></AnchorPane>
                         </content>
                       </Tab>
                         <Tab fx:id="attackMenu" text="attaque">
                            <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label alignment="CENTER" layoutX="19.0" layoutY="14.0" prefHeight="29.0" prefWidth="163.0" text="Selectionner Pays 1" />
+                                    <Label alignment="CENTER" layoutX="19.0" layoutY="104.0" prefHeight="29.0" prefWidth="163.0" text="Selectionner  Pays 2" />
+                                    <ChoiceBox fx:id="attackCountry1" layoutX="20.0" layoutY="53.0" prefHeight="28.0" prefWidth="161.0" />
+                                    <ChoiceBox fx:id="attackCountry2" layoutX="20.0" layoutY="155.0" prefHeight="28.0" prefWidth="161.0" />
+                                    <Label alignment="CENTER" layoutX="20.0" layoutY="232.0" prefHeight="25.0" prefWidth="109.0" text="Infanterie" />
+                                    <Label alignment="CENTER" layoutX="20.0" layoutY="271.0" prefHeight="25.0" prefWidth="109.0" text="Cavalerie" />
+                                    <Label alignment="CENTER" layoutX="20.0" layoutY="308.0" prefHeight="25.0" prefWidth="109.0" text="Artillerie" />
+                                    <TextField fx:id="attackNumberInfrantry" layoutX="139.0" layoutY="232.0" prefHeight="25.0" prefWidth="36.0" />
+                                    <TextField fx:id="attackNumberCavalry" layoutX="139.0" layoutY="271.0" prefHeight="25.0" prefWidth="36.0" />
+                                    <TextField fx:id="attackNumberArtillery" layoutX="139.0" layoutY="308.0" prefHeight="25.0" prefWidth="36.0" />
+                                    <Button fx:id="attack" layoutX="106.0" layoutY="365.0" mnemonicParsing="false" onAction="#attackAction" prefHeight="31.0" prefWidth="77.0" text="Attaquer" />
+                                 </children>
+                              </AnchorPane>
                            </content>
                         </Tab>
                     </tabs>

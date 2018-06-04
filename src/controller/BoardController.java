@@ -1,6 +1,9 @@
 package controller;
 
 import com.sun.xml.internal.bind.annotation.OverrideAnnotationOf;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -157,6 +160,10 @@ public class BoardController implements Initializable {
     @FXML
     private Pane A_12;
 
+    /*
+     * Graphics elements for reinforce
+     */
+
     @FXML
     private Label reinforcePlayerName;
 
@@ -190,6 +197,50 @@ public class BoardController implements Initializable {
     @FXML
     private Label reinforceCountryName;
 
+    /*
+     * Graphics elements for move
+     */
+
+    @FXML
+    private ChoiceBox moveCountry1;
+
+    @FXML
+    private ChoiceBox moveCountry2;
+
+    @FXML
+    private TextField moveNumberInfrantry;
+
+    @FXML
+    private TextField moveNumberCavalry;
+
+    @FXML
+    private TextField moveNumberArtillery;
+
+    @FXML
+    private Button move;
+
+    /*
+     * Graphics elements for attack
+     */
+
+    @FXML
+    private ChoiceBox attackCountry1;
+
+    @FXML
+    private ChoiceBox attackCountry2;
+
+    @FXML
+    private TextField attackNumberInfrantry;
+
+    @FXML
+    private TextField attackNumberCavalry;
+
+    @FXML
+    private TextField attackNumberArtillery;
+
+    @FXML
+    private Button attack;
+
     private boolean isCountryReinforce=false;
 
     @Override
@@ -203,6 +254,14 @@ public class BoardController implements Initializable {
                 AF_1,AF_2,AF_3,AF_4,AF_5,AF_6,
                 AU_1,AU_2,AU_3,AU_4,
                 A_1,A_2,A_3,A_4,A_5,A_6,A_7,A_8,A_9,A_10,A_11,A_12);
+
+        attackCountry1.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Object>() {
+            @Override
+            public void changed(ObservableValue<? extends Object> observableValue, Object name1, Object name2) {
+                Country country =CountryUtils.getCountryByName(board.getCountries(),String.valueOf(name2));
+                attackCountry2.setItems(FXCollections.observableArrayList(country.getAdjacencyCountries().stream().map(c->c.getCountryName()).collect(Collectors.toList())));
+            }
+        });
         //updateCountries(board.getCountries());
         //updatePlayers(board.getPlayers());
     }
@@ -293,7 +352,23 @@ public class BoardController implements Initializable {
     }
 
     private void initAttack(){
+        attackCountry1.setItems(FXCollections.observableArrayList(board.getCurrentPlayer().getCountries().stream().map(c->c.getCountryName()).collect(Collectors.toList())));
+        reinforceMenu.setDisable(true);
+        moveMenu.setDisable(false);
+        attackMenu.setDisable(false);
+    }
 
+    @FXML
+    private void attackAction(ActionEvent event){
+
+    }
+
+    @FXML
+    private void moveAction(ActionEvent event){
+        //condition ternaire java condition?resultat(si true):resultat(si false)
+        int infantryCount = Integer.parseInt(!attackNumberInfrantry.getText().equals("")?attackNumberInfrantry.getText():"0");
+        int cavalryCount = Integer.parseInt(!attackNumberCavalry.getText().equals("")?attackNumberCavalry.getText():"0");
+        int artilleryCount = Integer.parseInt(!attackNumberArtillery.getText().equals("")?attackNumberArtillery.getText():"0");
     }
 
 }

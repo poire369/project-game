@@ -49,6 +49,14 @@ public class BoardUtils {
             System.out.println("erreur initalisation des pays");
             return null;
         }
+        for(Country country : countries){
+            List<Country> adjacentsCountries = new ArrayList<>();
+            for(int adjacentCountryId : country.getAdjacencyCountriesId()){
+                Country adjacentCountry = CountryUtils.getCountryById(countries,adjacentCountryId);
+                adjacentsCountries.add(adjacentCountry);
+            }
+            country.setAdjacencyCountries(adjacentsCountries);
+        }
 
         //countries.forEach(c->System.out.println(c.getBoardViewId()+","+c.getCountryName()));
 

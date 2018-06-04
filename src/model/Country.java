@@ -9,7 +9,9 @@ public class Country {
 
     private String countryName;
 
-    private List<Integer> adjacencyCountries;
+    private List<Country> adjacencyCountries;
+
+    private List<Integer> adjacencyCountriesId;
 
     private boolean isEmpty;
 
@@ -23,12 +25,12 @@ public class Country {
 
     public Country(int countryId,
             String countryName,
-            List<Integer> adjacencyCountries,
+            List<Integer> adjacencyCountriesId,
                    int territoryId,String boardViewId)
     {
         this.countryId=countryId;
         this.countryName=countryName;
-        this.adjacencyCountries = adjacencyCountries;
+        this.adjacencyCountriesId = adjacencyCountriesId;
         this.territoryId=territoryId;
         this.boardViewId=boardViewId;
         this.isEmpty=true;
@@ -52,11 +54,11 @@ public class Country {
         this.countryName = countryName;
     }
 
-    public List<Integer> getAdjacencyCountries() {
+    public List<Country> getAdjacencyCountries() {
         return adjacencyCountries;
     }
 
-    public void setAdjacencyCountries(List<Integer> adjacencyCountries) {
+    public void setAdjacencyCountries(List<Country> adjacencyCountries) {
         this.adjacencyCountries = adjacencyCountries;
     }
 
@@ -98,5 +100,13 @@ public class Country {
 
     public void setBoardViewId(String boardViewId) {
         this.boardViewId = boardViewId;
+    }
+
+    public List<Integer> getAdjacencyCountriesId() {
+        return adjacencyCountriesId;
+    }
+
+    public void setAdjacencyCountriesId(List<Integer> adjacencyCountriesId) {
+        this.adjacencyCountriesId = adjacencyCountriesId;
     }
 }

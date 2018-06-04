@@ -1,11 +1,11 @@
-1,Alaska,3:1,1,NA_1
-2,Alberta,1:2:4,1,NA_2
-3,Central America,3:6:4,1,NA_3
-4,Eastern United States,3:5:2,1,NA_4
-5,Greenland,2:1:4,1,NA_5
-6,Northwest Territory,3:1,1,NA_6
-7,Ontario,3:1,1,NA_7
-8,Quebec,3:1,1,NA_8
+1,Alaska,6:2:36,1,NA_1
+2,Alberta,2:6:7:9,1,NA_2
+3,Central America,4:9:13,1,NA_3
+4,Eastern United States,7:8:9:3,1,NA_4
+5,Greenland,6:7:8:21,1,NA_5
+6,Northwest Territory,1:2:7:8:5,1,NA_6
+7,Ontario,2:9:4:8:6:5,1,NA_7
+8,Quebec,4:7:5,1,NA_8
 9,Western United States,3:1,1,NA_9
 10,Argentina,3:1,2,SA_1
 11,Brazil,3:1,2,SA_2
@@ -20,7 +20,7 @@
 20,Great Britain,3:1,4,E_1
 21,Iceland,3:1,4,E_2
 22,Northern Europe,3:1,4,E_3
-23,Scandinavia,3:1,4,E_4
+23,Scandinavia,25:1,4,E_4
 24,Southern Europe,3:1,4,E_5
 25,Ukraine,3:1,4,E_6
 26,Western Europe,3:1,4,E_7

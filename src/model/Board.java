@@ -30,7 +30,7 @@ public class Board {
         players=new ArrayList<>();
         territories= new ArrayList<>();
         countries = new ArrayList<>();
-        //constructor
+        actionType=ActionType.REINFORCE;
     }
 
     public void init(BoardController controller){
@@ -131,6 +131,10 @@ public class Board {
             }
         }
         return -1;
+    }
+
+    public AttackResult attack(Country attackCountry, int infantryCount, int cavalryCount, int artilleryCount, Country defenseCountry){
+        return new AttackResult();
     }
 
     //getter and setter
