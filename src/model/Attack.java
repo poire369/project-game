@@ -1,56 +1,80 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Attack {
 		
 	// Attribut
-		private Country attack; 
-			
+		private Country countryAttack;
+
 		private List<Unit> attackUnits;
-	
-		private Country defend;
+
+		private Country countryDefend;
+
 		
-	// Constructeur	
-		
-		public Attack(Country attack, List<Unit> attackUnits, Country defend){
-			
-			this.attack=attack;
+	// Constructeur
+		public Attack(Country countryAttack, List<Unit> attackUnits, Country countryDefend){
+			this.countryAttack=countryAttack;
 			this.attackUnits=attackUnits;
-			this.defend=defend;			
+			this.countryDefend=countryDefend;
 		}
 
 		
-	// Méthode simulAttack
+	// Methode simulAttack
 		
 		public void simulAttack() {
-			List<Unit> defenseurs = new ArrayList();
-			Collections.sort(defenseurs, new Comparator<Unit>() {		//créer une instance de comparator
+			List<Unit> countryDefendUnits = countryDefend.getUnits();
+			Collections.sort(countryDefendUnits, new Comparator<Unit>() {		//crï¿½er une instance de comparator
 			      @Override
 			      public int compare (Unit unit1, Unit unit2) {			
 			    	  return Integer.compare(unit1.getDefensePriority(), unit2.getDefensePriority());
-			      
 			      }
-			
 			} );
-		
+			List<Unit> defenders = countryDefendUnits.subList(0,2);
+			attackUnits.forEach(u->u.setScore(generateScore(u)));
+			defenders.forEach(u->u.setScore(generateScore(u)));
+			Collections.sort(attackUnits,order(true));
+			Collections.sort(defenders,order(false));
+			AttackResult attackResult = new AttackResult(countryAttack,countryDefend);
+			for(int i=0;i<attackUnits.size();i++){
+				Unit attack = attackUnits.get(i);
+				Unit defense = defenders.get(i);
+				boolean result = defense.getScore()>=attack.getScore();
+				attackResult.getResultAttackUnits().put(attack,!result);
+				attackResult.getResultDefenseUnits().put(defense,result);
+			}
 		} 
-		
-		
+
+		private int generateScore(Unit unit){
+			return new Random().nextInt((unit.getMaxPower() - unit.getMinPower()) + 1) + unit.getMinPower();
+		}
+
+		private Comparator<Unit> order(boolean isAttack){
+			return  new Comparator<Unit>() {
+				@Override
+				public int compare (Unit unit1, Unit unit2) {
+					if(unit1.getScore()==unit2.getScore()){
+						if(isAttack==true){
+							return Integer.compare(unit1.getAttackPriority(), unit2.getAttackPriority());
+						} else {
+							return Integer.compare(unit1.getDefensePriority(), unit2.getDefensePriority());
+						}
+					} else {
+						return -Integer.compare(unit1.getScore(), unit2.getScore());
+					}
+				}
+			};
+		}
 		
 		
 	// Getter & Setters	
 		
 		public Country getAttack() {
-			return attack;
+			return countryAttack;
 		}
 
 		public void setAttack(Country attack) {
-			this.attack = attack;
+			this.countryAttack = attack;
 		}
 
 		public List<Unit> getAttackUnits() {
@@ -62,11 +86,11 @@ public class Attack {
 		}
 
 		public Country getDefend() {
-			return defend;
+			return countryDefend;
 		}
 
 		public void setDefend(Country defend) {
-			this.defend = defend;
+			this.countryDefend = defend;
 		}
 		
 

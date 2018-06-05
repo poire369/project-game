@@ -16,6 +16,8 @@ public class Unit {
 
     private int move;
 
+    private int score;
+
     public Unit(UnitType unitType, int cout, int minpPower,int maxPower, int attackPriority, int defensePriority, int move) {
         this.unitType = unitType;
         this.cout = cout;
@@ -80,5 +82,13 @@ public class Unit {
 
     public void setDefensePriority(int defensePriority) {
         this.defensePriority = defensePriority;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

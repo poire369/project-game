@@ -49,7 +49,7 @@ public class Board {
                 Country tempCountry =coutriesList.get(0);
                 p.getCountries().add(tempCountry);
                 Country c = CountryUtils.getCountryById(countries,tempCountry.getCountryId());
-                c.setPlayerId(p.getPlayerId());
+                c.setPlayer(p);
                 coutriesList.remove(tempCountry);
             });
         }
@@ -81,7 +81,7 @@ public class Board {
         if(currentPlayer.getReinforceUnitCount()<totalUnitCost){
             return "Le nombre d'unite est superieure a celui disponible";
         }
-        if(country.getPlayerId()!=currentPlayer.getPlayerId()){
+        if(country.getPlayer().getPlayerId()!=currentPlayer.getPlayerId()){
             return "Ce pays ne vous appartient pas";
         }
         for(int i=0;i<infantryCount;i++){
@@ -133,8 +133,8 @@ public class Board {
         return -1;
     }
 
-    public AttackResult attack(Country attackCountry, int infantryCount, int cavalryCount, int artilleryCount, Country defenseCountry){
-        return new AttackResult();
+    public void attack(Country attackCountry, int infantryCount, int cavalryCount, int artilleryCount, Country defenseCountry){
+        //return new AttackResult();
     }
 
     //getter and setter

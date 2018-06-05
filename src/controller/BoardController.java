@@ -312,7 +312,7 @@ public class BoardController implements Initializable {
 
     public void updateCountry(Country country){
         Pane countryView = getCountryById(countryViews,country.getBoardViewId());
-        countryView.setStyle("-fx-background-color:"+PlayerUtils.PLAYERSCOLOR.get(country.getPlayerId()-1));
+        countryView.setStyle("-fx-background-color:"+PlayerUtils.PLAYERSCOLOR.get(country.getPlayer().getPlayerId()-1));
     }
 
     public void updatePlayers(List<Player> players){

@@ -15,7 +15,7 @@ public class Country {
 
     private boolean isEmpty;
 
-    private int playerId;
+    private Player player;
 
     private List<Unit> units;
 
@@ -34,7 +34,7 @@ public class Country {
         this.territoryId=territoryId;
         this.boardViewId=boardViewId;
         this.isEmpty=true;
-        this.playerId=-1;
+        this.player=null;
         this.units = new ArrayList<>();
     }
 
@@ -70,12 +70,12 @@ public class Country {
         isEmpty = empty;
     }
 
-    public int getPlayerId() {
-        return playerId;
+    public Player getPlayer() {
+        return player;
     }
 
-    public void setPlayerId(int playerId) {
-        this.playerId = playerId;
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public List<Unit> getUnits() {
