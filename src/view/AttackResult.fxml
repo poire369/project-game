@@ -6,7 +6,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AttackResultController">
    <children>
       <Label alignment="CENTER" layoutX="38.0" layoutY="24.0" prefHeight="34.0" prefWidth="70.0" text="Attaquant" />
@@ -18,20 +17,20 @@
       <Label alignment="CENTER" layoutX="333.0" layoutY="76.0" prefHeight="34.0" prefWidth="77.0" text="Pays" />
       <Label fx:id="countryAttack" alignment="CENTER" layoutX="142.0" layoutY="74.0" prefHeight="27.0" prefWidth="138.0" text="pays" />
       <Label fx:id="countryDefense" alignment="CENTER" layoutX="439.0" layoutY="80.0" prefHeight="27.0" prefWidth="138.0" text="pays" />
-      <TableView fx:id="attackTabResult" layoutX="38.0" layoutY="138.0" prefHeight="200.0" prefWidth="228.0">
+      <Button fx:id="close" layoutX="258.0" layoutY="361.0" mnemonicParsing="false" onAction="#closeAction" prefHeight="25.0" prefWidth="86.0" text="OK" />
+      <TableView fx:id="attackTabResult" layoutX="36.0" layoutY="126.0" prefHeight="212.0" prefWidth="226.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Unite" />
-          <TableColumn prefWidth="75.0" text="Score" />
-            <TableColumn prefWidth="77.0" text="Statut" />
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+            <TableColumn prefWidth="75.0" text="Column X" />
         </columns>
       </TableView>
-      <TableView fx:id="defenseTabResult" layoutX="333.0" layoutY="138.0" prefHeight="200.0" prefWidth="228.0">
+      <TableView fx:id="defenseTabResult" layoutX="333.0" layoutY="126.0" prefHeight="212.0" prefWidth="226.0">
          <columns>
-            <TableColumn prefWidth="75.0" text="Unite" />
-            <TableColumn prefWidth="75.0" text="Score" />
-            <TableColumn prefWidth="77.0" text="Statut" />
+            <TableColumn prefWidth="75.0" text="C1" />
+            <TableColumn prefWidth="75.0" text="C2" />
+            <TableColumn prefWidth="75.0" text="Column X" />
          </columns>
       </TableView>
-      <Button fx:id="close" layoutX="258.0" layoutY="361.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="86.0" text="OK" />
    </children>
 </AnchorPane>

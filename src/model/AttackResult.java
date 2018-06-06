@@ -1,7 +1,6 @@
 package model;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class AttackResult {
 
@@ -9,15 +8,15 @@ public class AttackResult {
 
     private Country defenseCountry;
 
-    private Map<Unit,Boolean> resultAttackUnits;
+    private List<Unit> resultAttackUnits;
 
-    private Map<Unit,Boolean> resultDefenseUnits;
+    private List<Unit> resultDefenseUnits;
 
     public AttackResult(Country attackCountry,Country defenseCountry){
         this.attackCountry=attackCountry;
         this.defenseCountry=defenseCountry;
-        resultAttackUnits = new HashMap<>();
-        resultDefenseUnits = new HashMap<>();
+        resultAttackUnits = new ArrayList<>();
+        resultDefenseUnits = new ArrayList<>();
     }
 
     public Country getAttackCountry() {
@@ -36,19 +35,19 @@ public class AttackResult {
         this.defenseCountry = defenseCountry;
     }
 
-    public Map<Unit, Boolean> getResultAttackUnits() {
+    public List<Unit> getResultAttackUnits() {
         return resultAttackUnits;
     }
 
-    public void setResultAttackUnits(Map<Unit, Boolean> resultAttackUnits) {
+    public void setResultAttackUnits(List<Unit> resultAttackUnits) {
         this.resultAttackUnits = resultAttackUnits;
     }
 
-    public Map<Unit, Boolean> getResultDefenseUnits() {
+    public List<Unit> getResultDefenseUnits() {
         return resultDefenseUnits;
     }
 
-    public void setResultDefenseUnits(Map<Unit, Boolean> resultDefenseUnits) {
+    public void setResultDefenseUnits(List<Unit> resultDefenseUnits) {
         this.resultDefenseUnits = resultDefenseUnits;
     }
 }

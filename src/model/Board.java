@@ -133,8 +133,51 @@ public class Board {
         return -1;
     }
 
-    public void attack(Country attackCountry, int infantryCount, int cavalryCount, int artilleryCount, Country defenseCountry){
-        //return new AttackResult();
+    public String isAttackOK(String attackCountryString, int infantryCount, int cavalryCount, int artilleryCount){
+        Country attackCountry = CountryUtils.getCountryByName(countries,attackCountryString);
+        int somme = infantryCount+cavalryCount+artilleryCount;
+        //verifier que la somme des 3 count est < a 3
+        if(somme>3){
+            return "somme des unites superieure a 3";
+        }
+        //verifier que la somme est strict inférieure au nombre d'unité sur le pays
+        if(attackCountry.getUnits().size()<=somme){
+            return "il doit vous restez au moins une unite pour attaquer";
+        }
+
+        //verifier que le pays qui attaque possede bien les unites quil faut
+        if(!(UnitUtils.countInfantry(attackCountry.getUnits())<=infantryCount)){
+            return "nombre d'infanteries insuffisants";
+        }
+        if(!(UnitUtils.countArtillery(attackCountry.getUnits())<=cavalryCount)){
+            return "nombre de cavaleries insuffisants";
+        }
+        if(!(UnitUtils.countArtillery(attackCountry.getUnits())<=artilleryCount)){
+            return "nombre d'artilleries insuffisants";
+        }
+        return "OK";
+    }
+
+    public AttackResult attack(String attackCountryString, int infantryCount, int cavalryCount, int artilleryCount, String defenseCountryString){
+        Country attackCountry = CountryUtils.getCountryByName(countries,attackCountryString);
+        Country defenseCountry = CountryUtils.getCountryByName(countries,defenseCountryString);
+        List<Unit> attackUnits = new ArrayList<>();
+        if(infantryCount>0) {
+            List<Unit> temp = UnitUtils.getUnits(attackCountry.getUnits(), UnitType.INFANTRY);
+            System.out.println(temp.size());
+            attackUnits.addAll(temp.subList(0,infantryCount));
+        }
+        if(cavalryCount>0) {
+            List<Unit> temp = UnitUtils.getUnits(attackCountry.getUnits(), UnitType.CAVALRY);
+            attackUnits.addAll(temp.subList(0,infantryCount));
+        }
+        if(artilleryCount>0) {
+            List<Unit> temp = UnitUtils.getUnits(attackCountry.getUnits(), UnitType.ARTILLERY);
+            attackUnits.addAll(temp.subList(0,infantryCount));
+        }
+        attackUnits.forEach(u->System.out.println(u.getUnitType()));
+        Attack attack  = new Attack(attackCountry,attackUnits,defenseCountry);
+        return attack.simulAttack();
     }
 
     //getter and setter

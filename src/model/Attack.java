@@ -22,7 +22,7 @@ public class Attack {
 		
 	// Methode simulAttack
 		
-		public void simulAttack() {
+		public AttackResult simulAttack() {
 			List<Unit> countryDefendUnits = countryDefend.getUnits();
 			Collections.sort(countryDefendUnits, new Comparator<Unit>() {		//cr�er une instance de comparator
 			      @Override
@@ -30,19 +30,35 @@ public class Attack {
 			    	  return Integer.compare(unit1.getDefensePriority(), unit2.getDefensePriority());
 			      }
 			} );
-			List<Unit> defenders = countryDefendUnits.subList(0,2);
+			List<Unit> defenders = countryDefendUnits.subList(0,Math.min(2,countryDefendUnits.size()));
 			attackUnits.forEach(u->u.setScore(generateScore(u)));
 			defenders.forEach(u->u.setScore(generateScore(u)));
+			attackUnits.forEach(u->System.out.println(u.getUnitType()+" "+u.getScore()));
+			defenders.forEach(u->System.out.println(u.getUnitType()+" "+u.getScore()));
 			Collections.sort(attackUnits,order(true));
 			Collections.sort(defenders,order(false));
+			System.out.println("attaquant");
+			attackUnits.forEach(u->System.out.println(u.getUnitType()+" "+u.getScore()));
+			System.out.println("defenseur");
+			defenders.forEach(u->System.out.println(u.getUnitType()+" "+u.getScore()));
 			AttackResult attackResult = new AttackResult(countryAttack,countryDefend);
-			for(int i=0;i<attackUnits.size();i++){
+			int minSizeList =Math.min(attackUnits.size(),defenders.size());
+			System.out.println(minSizeList);
+			for(int i=0;i<minSizeList;i++){
+				System.out.println("dans la boucle");
 				Unit attack = attackUnits.get(i);
 				Unit defense = defenders.get(i);
-				boolean result = defense.getScore()>=attack.getScore();
-				attackResult.getResultAttackUnits().put(attack,!result);
-				attackResult.getResultDefenseUnits().put(defense,result);
+				if(defense.getScore()>=attack.getScore()){
+					attack.setStatus("detruit");
+				}else{
+					defense.setStatus("detruit");
+				}
 			}
+			attackResult.setResultAttackUnits(attackUnits);
+			attackResult.setResultDefenseUnits(defenders);
+			attackResult.getResultAttackUnits().forEach((v)->System.out.println(v.getUnitType()+" "+v+" "+v.getScore()));
+			attackResult.getResultDefenseUnits().forEach((v)->System.out.println(v.getUnitType()+" "+v+" "+v.getScore()));
+			return attackResult;
 		} 
 
 		private int generateScore(Unit unit){

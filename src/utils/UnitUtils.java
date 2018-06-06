@@ -23,6 +23,10 @@ public class UnitUtils {
         return artilleries.size();
     }
 
+    public static List<Unit> getUnits(List<Unit> units,UnitType unitType){
+        return units.stream().filter(u->u.getUnitType()== unitType).collect(Collectors.toList());
+    }
+
     public static Unit createInfantry(){
         return new Unit(UnitType.INFANTRY, 1, 1,6, 2, 1, 2);
     }

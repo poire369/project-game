@@ -5,7 +5,11 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javax.swing.*;
@@ -14,13 +18,12 @@ import javafx.scene.input.MouseEvent;
 
 
 import javafx.scene.layout.Pane;
-import model.ActionType;
-import model.Board;
-import model.Country;
-import model.Player;
+import javafx.stage.Stage;
+import model.*;
 import utils.CountryUtils;
 import utils.PlayerUtils;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -359,8 +362,40 @@ public class BoardController implements Initializable {
     }
 
     @FXML
-    private void attackAction(ActionEvent event){
+    private void attackAction(ActionEvent event) throws IOException {
+        int attackNumberInfrantryValue = !attackNumberInfrantry.getText().equals("")?Integer.valueOf(attackNumberInfrantry.getText()):0;
+        int attackNumberCavalryValue = !attackNumberCavalry.getText().equals("")?Integer.valueOf(attackNumberCavalry.getText()):0;
+        int attackNumberArtilleryValue = !attackNumberArtillery.getText().equals("")?Integer.valueOf(attackNumberArtillery.getText()):0;
+        String isAttackOkMessage = board.isAttackOK(attackCountry1.getValue().toString()
+                ,attackNumberInfrantryValue
+                ,attackNumberCavalryValue
+                ,attackNumberArtilleryValue);
+        if(!isAttackOkMessage.equals("OK")){
+            new Alert(Alert.AlertType.INFORMATION, isAttackOkMessage).showAndWait();
+        }else {
+            AttackResult attackResult = board.attack(attackCountry1.getValue().toString()
+                    , attackNumberInfrantryValue
+                    , attackNumberCavalryValue
+                    , attackNumberArtilleryValue
+                    , attackCountry2.getValue().toString());
+            launchAttackResultView(attackResult);
+        }
 
+        //mettre a jour les pays qui ont attaqué
+        //verifier que le joueur qui a été attaqué a toujours des unités
+    }
+
+    private void launchAttackResultView(AttackResult attackResult) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("../view/AttackResult.fxml"));
+        loader.load();
+        AttackResultController controller = loader.getController();
+        Parent boardGameView = loader.getRoot();
+        controller.setAttackResult(attackResult);
+        Scene boardGameScene = new Scene(boardGameView, 600, 473);
+        Stage window = new Stage();
+        window.setScene(boardGameScene);
+        window.show();
     }
 
     @FXML

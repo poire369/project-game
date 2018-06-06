@@ -18,7 +18,9 @@ public class Unit {
 
     private int score;
 
-    public Unit(UnitType unitType, int cout, int minpPower,int maxPower, int attackPriority, int defensePriority, int move) {
+    private String status;
+
+    public Unit(UnitType unitType, int cout, int minPower,int maxPower, int attackPriority, int defensePriority, int move) {
         this.unitType = unitType;
         this.cout = cout;
         this.minPower = minPower;
@@ -26,6 +28,7 @@ public class Unit {
         this.attackPriority = attackPriority;
         this.defensePriority = defensePriority;
         this.move=move;
+        this.status="ok";
     }
 
     public UnitType getUnitType() {
@@ -90,5 +93,13 @@ public class Unit {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
