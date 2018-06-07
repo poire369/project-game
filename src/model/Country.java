@@ -1,5 +1,7 @@
 package model;
 
+import utils.UnitUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,8 @@ public class Country {
 
     private String boardViewId;
 
+    private boolean isCaptured;
+
     public Country(int countryId,
             String countryName,
             List<Integer> adjacencyCountriesId,
@@ -36,6 +40,29 @@ public class Country {
         this.isEmpty=true;
         this.player=null;
         this.units = new ArrayList<>();
+        isCaptured=false;
+        units.add(UnitUtils.createInfantry());
+    }
+
+    public void removeInfantry(int number){
+        List<Unit> infantry = UnitUtils.getUnits(units,UnitType.INFANTRY);
+        for(int i=0;i<number;i++){
+            infantry.remove(0);
+        }
+    }
+
+    public void removeCavalry(int number){
+        List<Unit> cavalry = UnitUtils.getUnits(units,UnitType.CAVALRY);
+        for(int i=0;i<number;i++){
+            cavalry.remove(0);
+        }
+    }
+
+    public void removeArtillery(int number){
+        List<Unit> artillery = UnitUtils.getUnits(units,UnitType.ARTILLERY);
+        for(int i=0;i<number;i++){
+            artillery.remove(0);
+        }
     }
 
     public int getCountryId() {
@@ -108,5 +135,13 @@ public class Country {
 
     public void setAdjacencyCountriesId(List<Integer> adjacencyCountriesId) {
         this.adjacencyCountriesId = adjacencyCountriesId;
+    }
+
+    public boolean isCaptured() {
+        return isCaptured;
+    }
+
+    public void setCaptured(boolean captured) {
+        isCaptured = captured;
     }
 }

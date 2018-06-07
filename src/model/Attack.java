@@ -37,15 +37,11 @@ public class Attack {
 			defenders.forEach(u->System.out.println(u.getUnitType()+" "+u.getScore()));
 			Collections.sort(attackUnits,order(true));
 			Collections.sort(defenders,order(false));
-			System.out.println("attaquant");
 			attackUnits.forEach(u->System.out.println(u.getUnitType()+" "+u.getScore()));
-			System.out.println("defenseur");
 			defenders.forEach(u->System.out.println(u.getUnitType()+" "+u.getScore()));
 			AttackResult attackResult = new AttackResult(countryAttack,countryDefend);
 			int minSizeList =Math.min(attackUnits.size(),defenders.size());
-			System.out.println(minSizeList);
 			for(int i=0;i<minSizeList;i++){
-				System.out.println("dans la boucle");
 				Unit attack = attackUnits.get(i);
 				Unit defense = defenders.get(i);
 				if(defense.getScore()>=attack.getScore()){

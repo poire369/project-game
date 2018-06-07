@@ -68,6 +68,8 @@ public class Board {
         currentPlayer=players.get(0);
         players.forEach(p-> System.out.println(p.getPlayerName()));
         assignCountries();
+        players.forEach(p->p.setReinforceUnitCount(p.getReinforceUnitCount()-p.getCountries().size()));
+
     }
 
     private int playerInitCountUnit(){
@@ -121,7 +123,7 @@ public class Board {
     }
 
     private void initTour(){
-
+        players.forEach(p->p.setReinforceUnitCount(5));
     }
 
     private int playerCurrentIndice(){
@@ -133,8 +135,9 @@ public class Board {
         return -1;
     }
 
-    public String isAttackOK(String attackCountryString, int infantryCount, int cavalryCount, int artilleryCount){
+    public String isAttackOK(String attackCountryString, int infantryCount, int cavalryCount, int artilleryCount, String attackCountry2String){
         Country attackCountry = CountryUtils.getCountryByName(countries,attackCountryString);
+        Country attackCountry2 = CountryUtils.getCountryByName(countries,attackCountry2String);
         int somme = infantryCount+cavalryCount+artilleryCount;
         //verifier que la somme des 3 count est < a 3
         if(somme>3){
@@ -145,14 +148,19 @@ public class Board {
             return "il doit vous restez au moins une unite pour attaquer";
         }
 
+        //verifier que l'on ne s'attaque pas sois meme
+        if(attackCountry.getPlayer().getPlayerId()==attackCountry2.getPlayer().getPlayerId()){
+            return "vous ne pouvez pas vous attaquez vous meme";
+        }
+
         //verifier que le pays qui attaque possede bien les unites quil faut
-        if(!(UnitUtils.countInfantry(attackCountry.getUnits())<=infantryCount)){
+        if(!(UnitUtils.countInfantry(attackCountry.getUnits())>=infantryCount)){
             return "nombre d'infanteries insuffisants";
         }
-        if(!(UnitUtils.countArtillery(attackCountry.getUnits())<=cavalryCount)){
+        if(!(UnitUtils.countArtillery(attackCountry.getUnits())>=cavalryCount)){
             return "nombre de cavaleries insuffisants";
         }
-        if(!(UnitUtils.countArtillery(attackCountry.getUnits())<=artilleryCount)){
+        if(!(UnitUtils.countArtillery(attackCountry.getUnits())>=artilleryCount)){
             return "nombre d'artilleries insuffisants";
         }
         return "OK";
@@ -177,7 +185,29 @@ public class Board {
         }
         attackUnits.forEach(u->System.out.println(u.getUnitType()));
         Attack attack  = new Attack(attackCountry,attackUnits,defenseCountry);
-        return attack.simulAttack();
+        AttackResult attackResult = attack.simulAttack();
+        return attackResult;
+    }
+
+    public void updateAttack(AttackResult attackResult){
+        Country attackCountry=attackResult.getAttackCountry();
+        Country defenseCountry = attackResult.getDefenseCountry();
+        List<Unit> attackUnitDestroyed = attackResult.getResultAttackUnits().stream().filter(u->u.getStatus().equals("detruit")).collect(Collectors.toList());
+        List<Unit> defenseUnitDestroyed = attackResult.getResultDefenseUnits().stream().filter(u->u.getStatus().equals("detruit")).collect(Collectors.toList());
+        attackUnitDestroyed.forEach(u->attackCountry.getUnits().remove(u));
+        defenseUnitDestroyed.forEach(u->defenseCountry.getUnits().remove(u));
+        Player attackPlayer = attackCountry.getPlayer();
+        Player defensePlayer = defenseCountry.getPlayer();
+        if(defenseCountry.getUnits().size()==0){
+            defenseCountry.setPlayer(attackCountry.getPlayer());
+            defenseCountry.setUnits(attackResult.getResultAttackUnits().stream().filter(u->u.getStatus().equals("ok")).collect(Collectors.toList()));
+            defensePlayer.getCountries().remove(defenseCountry);
+            attackPlayer.getCountries().add(defenseCountry);
+            attackResult.getResultAttackUnits().forEach(u->attackCountry.getUnits().remove(u));
+        }
+        if(defensePlayer.getCountries().size()==0){
+            players.remove(defensePlayer);
+        }
     }
 
     //getter and setter

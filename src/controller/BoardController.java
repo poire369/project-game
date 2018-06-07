@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import model.*;
 import utils.CountryUtils;
 import utils.PlayerUtils;
+import utils.UnitUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -174,7 +175,7 @@ public class BoardController implements Initializable {
     private Label reinforcePlayerUnit;
 
     @FXML
-    private Button reinforceCountry;
+    private ChoiceBox reinforceCountry;
 
     @FXML
     private TextField reinforceNumberInfrantry;
@@ -196,9 +197,6 @@ public class BoardController implements Initializable {
 
     @FXML
     private Tab attackMenu;
-
-    @FXML
-    private Label reinforceCountryName;
 
     /*
      * Graphics elements for move
@@ -246,6 +244,24 @@ public class BoardController implements Initializable {
 
     private boolean isCountryReinforce=false;
 
+    @FXML
+    private Label countArtilleryCountry;
+
+    @FXML
+    private Label countInfantryCountry;
+
+    @FXML
+    private Label countCavalryCountry;
+
+    @FXML
+    private Label playerBorderBottom;
+
+    @FXML
+    private Label playerBorderTop;
+
+    @FXML
+    private Label playerName;
+
     @Override
     public void initialize(URL location, ResourceBundle resources){
         //toutes les phases d'initialisation
@@ -265,22 +281,37 @@ public class BoardController implements Initializable {
                 attackCountry2.setItems(FXCollections.observableArrayList(country.getAdjacencyCountries().stream().map(c->c.getCountryName()).collect(Collectors.toList())));
             }
         });
-        //updateCountries(board.getCountries());
-        //updatePlayers(board.getPlayers());
+
+        moveCountry1.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Object>() {
+            @Override
+            public void changed(ObservableValue<? extends Object> observableValue, Object name1, Object name2) {
+                Country country =CountryUtils.getCountryByName(board.getCountries(),String.valueOf(name2));
+                moveCountry2.setItems(FXCollections.observableArrayList(country.getAdjacencyCountries().stream().map(c->c.getCountryName()).collect(Collectors.toList())));
+            }
+        });
     }
 
     public void setPlayers(List<String> playersName){
         board.createPlayers(playersName);
         updateCountries(board.getCountries());
         initReinforce();
+        updatePlayerInfo();
+    }
+
+    private void updatePlayerInfo(){
+        int id = board.getCurrentPlayer().getPlayerId();
+        playerBorderBottom.setStyle("-fx-background-color:"+PlayerUtils.PLAYERSCOLOR.get(id-1));
+        playerBorderTop.setStyle("-fx-background-color:"+PlayerUtils.PLAYERSCOLOR.get(id-1));
+        playerName.setText(board.getCurrentPlayer().getPlayerName());
     }
 
     private void initReinforce(){
         moveMenu.setDisable(true);
         attackMenu.setDisable(true);
+        reinforceMenu.setDisable(false);
         reinforcePlayerName.setText(board.getCurrentPlayer().getPlayerName());
         reinforcePlayerUnit.setText(String.valueOf(board.getCurrentPlayer().getReinforceUnitCount()));
-        reinforceCountryName.setText("");
+        reinforceCountry.setItems(FXCollections.observableArrayList(board.getCurrentPlayer().getCountries().stream().map(c->c.getCountryName()).collect(Collectors.toList())));
         reinforceNumberInfrantry.setText("");
         reinforceNumberCavalry.setText("");
         reinforceNumberArtillery.setText("");
@@ -296,12 +327,11 @@ public class BoardController implements Initializable {
 
     @FXML
     private void countryAction(MouseEvent event){
-        if(isCountryReinforce==true){
-            String countryId = ((Pane)event.getSource()).getId();
-            reinforceCountryName.setText(CountryUtils.getCountryByBoardViewId(board.getCountries(),countryId).getCountryName());
-            isCountryReinforce=false;
-        }
-
+        String countryId = ((Pane)event.getSource()).getId();
+        Country country = CountryUtils.getCountryByBoardViewId(board.getCountries(),countryId);
+        countInfantryCountry.setText(String.valueOf(UnitUtils.countInfantry(country.getUnits())));
+        countCavalryCountry.setText(String.valueOf(UnitUtils.countCavalry(country.getUnits())));
+        countArtilleryCountry.setText(String.valueOf(UnitUtils.countArtillery(country.getUnits())));
     }
 
     @FXML
@@ -326,18 +356,12 @@ public class BoardController implements Initializable {
         //mettre a jour les elements graphiques
     }
 
-    //renforts
-    @FXML
-    private void reinforceCountryChoice(ActionEvent event){
-        isCountryReinforce=true;
-    }
-
     @FXML
     private void reinforceAction(ActionEvent event){
         int infantryCount = Integer.parseInt(!reinforceNumberInfrantry.getText().equals("")?reinforceNumberInfrantry.getText():"0");
         int cavalryCount = Integer.parseInt(!reinforceNumberCavalry.getText().equals("")?reinforceNumberCavalry.getText():"0");
         int artilleryCount = Integer.parseInt(!reinforceNumberArtillery.getText().equals("")?reinforceNumberArtillery.getText():"0");
-        String returnMessage = board.reinforce(infantryCount,cavalryCount,artilleryCount,reinforceCountryName.getText());
+        String returnMessage = board.reinforce(infantryCount,cavalryCount,artilleryCount,reinforceCountry.getValue().toString());
         if(!returnMessage.equals("ok")){
             new Alert(Alert.AlertType.INFORMATION, returnMessage).showAndWait();
         }
@@ -347,6 +371,7 @@ public class BoardController implements Initializable {
     @FXML
     private void nextPlayerAction(ActionEvent event){
         board.nextPlayer();
+        updatePlayerInfo();
         if(board.getActionType()==ActionType.REINFORCE) {
             initReinforce();
         }else {
@@ -356,6 +381,7 @@ public class BoardController implements Initializable {
 
     private void initAttack(){
         attackCountry1.setItems(FXCollections.observableArrayList(board.getCurrentPlayer().getCountries().stream().map(c->c.getCountryName()).collect(Collectors.toList())));
+        moveCountry1.setItems(FXCollections.observableArrayList(board.getCurrentPlayer().getCountries().stream().map(c->c.getCountryName()).collect(Collectors.toList())));
         reinforceMenu.setDisable(true);
         moveMenu.setDisable(false);
         attackMenu.setDisable(false);
@@ -369,7 +395,8 @@ public class BoardController implements Initializable {
         String isAttackOkMessage = board.isAttackOK(attackCountry1.getValue().toString()
                 ,attackNumberInfrantryValue
                 ,attackNumberCavalryValue
-                ,attackNumberArtilleryValue);
+                ,attackNumberArtilleryValue
+                ,attackCountry2.getValue().toString());
         if(!isAttackOkMessage.equals("OK")){
             new Alert(Alert.AlertType.INFORMATION, isAttackOkMessage).showAndWait();
         }else {
@@ -379,6 +406,12 @@ public class BoardController implements Initializable {
                     , attackNumberArtilleryValue
                     , attackCountry2.getValue().toString());
             launchAttackResultView(attackResult);
+            board.updateAttack(attackResult);
+            updateCountry(attackResult.getAttackCountry());
+            updateCountry(attackResult.getDefenseCountry());
+        }
+        if(board.getPlayers().size()==1){
+            new Alert(Alert.AlertType.INFORMATION, "vous avez gagnez!!!!").showAndWait();
         }
 
         //mettre a jour les pays qui ont attaqué
